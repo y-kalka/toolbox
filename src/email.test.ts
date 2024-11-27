@@ -63,4 +63,10 @@ describe("fingerprint", (test) => {
 			}
 		}
 	});
+
+	test("should use the salt correctly", () => {
+		expect(fingerprint("hello@world.com")).not.equal(
+			fingerprint("hello@world.com", { salt: "test" }),
+		);
+	});
 });

@@ -114,7 +114,25 @@ export function sanatizeEmail(email: string): string {
 	return `${parsed.address}@${parsed.domain}`;
 }
 
-export function fingerprint(email: string, hash = "md5"): string {
-	const sanatized = sanatizeEmail(email).toLowerCase();
-	return createHash(hash).update(sanatized).digest("base64");
+interface FingerPrintOptions {
+	/**
+	 * @default "md5"
+	 */
+	algorithm?: string;
+	salt?: string;
+}
+
+export function fingerprint(
+	email: string,
+	options?: FingerPrintOptions,
+): string {
+	let sanatized = sanatizeEmail(email).toLowerCase();
+
+	if (options?.salt) {
+		sanatized = options.salt + sanatized;
+	}
+
+	return createHash(options?.algorithm || "md5")
+		.update(sanatized)
+		.digest("base64");
 }
