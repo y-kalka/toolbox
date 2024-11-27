@@ -8,7 +8,6 @@
 	"engines": {
 		"node": ">=22.9.0"
 	},
-	"private": "false",
 	"scripts": {
 		"test": "vitest run",
 		"build": "tsup",
