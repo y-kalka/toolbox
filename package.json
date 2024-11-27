@@ -1,6 +1,6 @@
 {
 	"name": "@y-kalka/toolbox",
-	"version": "1.1.0",
+	"version": "1.1.2",
 	"type": "module",
 	"scripts": {
 		"test": "vitest run",
@@ -8,21 +8,16 @@
 		"fmt": "biome format --write .",
 		"fix": "biome check --write .",
 		"lint": "biome check .",
-		"prepublish": "pnpm test && pnpm lint"
+		"prepublish": "pnpm test && pnpm lint && pnpm build"
 	},
 	"exports": {
 		"./email": {
-			"import": {
-				"types": "./dist/email.d.ts",
-				"default": "./dist/email.js"
-			},
-			"require": {
-				"types": "./dist/email.d.cts",
-				"default": "./dist/email.cjs"
-			}
+			"types": "./dist/email.d.ts",
+			"import": "./dist/email.js",
+			"require": "./dist/email.cjs"
 		}
 	},
-	"files": ["dist"],
+	"files": ["dist/**/*.js", "dist/**/*.d.ts", "dist/**/*.map"],
 	"keywords": [],
 	"author": "",
 	"license": "MIT",
