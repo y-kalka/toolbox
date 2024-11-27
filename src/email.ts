@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+
 /**
  * List of domains which will ignore any dots in the local part of the address
  */
@@ -110,4 +112,9 @@ export function sanatizeEmail(email: string): string {
 	}
 
 	return `${parsed.address}@${parsed.domain}`;
+}
+
+export function fingerprint(email: string, hash = "md5"): string {
+	const sanatized = sanatizeEmail(email).toLowerCase();
+	return createHash(hash).update(sanatized).digest("base64");
 }

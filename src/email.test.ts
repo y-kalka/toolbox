@@ -2,6 +2,7 @@ import { describe, expect } from "vitest";
 import {
 	addSubAddress,
 	dropSubAddress,
+	fingerprint,
 	sanatizeEmail,
 	setSubAddress,
 } from "./email.js";
@@ -40,5 +41,26 @@ describe("sanatizeEmail", (test) => {
 			"helLo@gmail.com",
 		);
 		expect(sanatizeEmail("he.lLo+tESt@world.com")).toBe("he.lLo@world.com");
+	});
+});
+
+describe("fingerprint", (test) => {
+	test("should generate the same fingerprint for differnt visual addresses", () => {
+		const testCases = [
+			{
+				alias: ["hello@gmail.com", "h.eLl.o@gmAIL.com"],
+				fingerprint: "tZp0EYO34ZkBVqRvqim2DA==",
+			},
+			{
+				alias: ["hello@world.com", "HELLO@world.com"],
+				fingerprint: "Szzfmt/GJYoQKrkOtkVl6g==",
+			},
+		];
+
+		for (const testCase of testCases) {
+			for (const alias of testCase.alias) {
+				expect(fingerprint(alias)).toBe(testCase.fingerprint);
+			}
+		}
 	});
 });
