@@ -1,4 +1,4 @@
-import { createHash } from "node:crypto";
+// import { createHash } from "node:crypto";
 
 /**
  * List of domains which will ignore any dots in the local part of the address
@@ -122,17 +122,17 @@ interface FingerPrintOptions {
 	salt?: string;
 }
 
-export function fingerprint(
-	email: string,
-	options?: FingerPrintOptions,
-): string {
-	let sanatized = sanatizeEmail(email).toLowerCase();
+// export function fingerprint(
+// 	email: string,
+// 	options?: FingerPrintOptions,
+// ): string {
+// 	let sanatized = sanatizeEmail(email).toLowerCase();
 
-	if (options?.salt) {
-		sanatized = options.salt + sanatized;
-	}
+// 	if (options?.salt) {
+// 		sanatized = options.salt + sanatized;
+// 	}
 
-	return createHash(options?.algorithm || "md5")
-		.update(sanatized)
-		.digest("base64");
-}
+// 	return createHash(options?.algorithm || "md5")
+// 		.update(sanatized)
+// 		.digest("base64");
+// }
