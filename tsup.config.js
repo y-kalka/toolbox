@@ -4,6 +4,8 @@ export default defineConfig({
 	entry: {
 		index: "src/index.ts",
 		email: "src/email.ts",
+		number: "src/number.ts",
+		percent: "src/percent.ts",
 	},
 	format: ["cjs", "esm"],
 	bundle: true,
