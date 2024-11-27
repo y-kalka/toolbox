@@ -1,8 +1,22 @@
 import { expect, test } from "vitest";
-import { addSubAddress, dropSubAddress, sanatizeEmail } from "./email.js";
+import {
+	addSubAddress,
+	dropSubAddress,
+	sanatizeEmail,
+	setSubAddress,
+} from "./email.js";
 
 test("adds a sub address into a email address", () => {
 	expect(addSubAddress("hello@world.com", "test")).toBe("hello+test@world.com");
+	expect(() => addSubAddress("hello+test@world.com", "test")).toThrowError(
+		"Email has already a sub address",
+	);
+});
+
+test("sets the sub address into a email address", () => {
+	expect(setSubAddress("hello+world@world.com", "test")).toBe(
+		"hello+test@world.com",
+	);
 });
 
 test("drops the sub address from a email address", () => {

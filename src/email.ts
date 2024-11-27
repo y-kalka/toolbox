@@ -7,42 +7,46 @@ const DOMAINS_IGNORING_DOTS_IN_LOCAL_PART = [
 	"googlemail.com",
 ];
 
-// export class EmailAddress{
-//     #localPart = "";
-//     #domainPart = "";
-//     #subAddress = "";
+interface ParsedEmailAddress {
+	address: string;
+	subAddress: string;
+	domain: string;
+}
 
-//     constructor(email: string){
-//         const [localPart, domainPart] = email.trim().split("@")
+function parse(email: string): ParsedEmailAddress {
+	if (!email || typeof email !== "string") {
+		throw Error("Invalid email address");
+	}
 
-//         this.#domainPart = domainPart.toLowerCase();
+	const [localPart, domainPart] = email.trim().split("@");
+	const [address, subAddress] = localPart.split("+");
 
-//         const [address, subAddress] = localPart.split("+");
-//         this.#localPart = address;
+	if (!address) {
+		throw Error("Email has no address");
+	}
 
-//         this.setSubAddress(subAddress);
-//     }
+	if (!domainPart) {
+		throw Error("Email has no domain");
+	}
 
-//     setSubAddress(subAddress: string | undefined | null): EmailAddress {
-//         this.#subAddress = subAddress ? subAddress: "";
+	return {
+		address: address || "",
+		subAddress: subAddress || "",
+		domain: domainPart.toLowerCase(),
+	};
+}
 
-//         return this;
-//     }
+function format(parsed: ParsedEmailAddress): string {
+	let email = parsed.address;
 
-//     toSanatizedString() {}
+	if (parsed.subAddress) {
+		email += `+${parsed.subAddress}`;
+	}
 
-//     toString(): string {
-//         let address = this.#localPart;
+	email += `@${parsed.domain}`;
 
-//         if(this.#subAddress){
-//             address+= `+${this.#subAddress}`
-//         }
-
-//         address += `@${this.#domainPart}`;
-
-//         return address;
-//     }
-// }
+	return email;
+}
 
 /**
  * Adds a sub address to the local part of an email address which will be ignored by email servers
@@ -51,13 +55,30 @@ const DOMAINS_IGNORING_DOTS_IN_LOCAL_PART = [
  * ```
  */
 export function addSubAddress(email: string, subAddress: string): string {
-	if (email.includes("+")) {
+	const parsed = parse(email);
+
+	if (parsed.subAddress) {
 		throw Error("Email has already a sub address");
 	}
 
-	const [localPart, domainPart] = email.split("@");
+	parsed.subAddress = subAddress;
 
-	return `${localPart}+${subAddress}@${domainPart.toLowerCase()}`;
+	return format(parsed);
+}
+
+/**
+ * Sets the sub address of the local part to the given value
+ * ```ts
+ * setSubAddress("hello@world.com", "test") // "hello+test@world.com"
+ * setSubAddress("hello+hello@world.com", "test") // "hello+test@world.com"
+ * ```
+ */
+export function setSubAddress(email: string, subAddress: string): string {
+	const parsed = parse(email);
+
+	parsed.subAddress = subAddress;
+
+	return format(parsed);
 }
 
 /**
@@ -67,20 +88,11 @@ export function addSubAddress(email: string, subAddress: string): string {
  * ```
  */
 export function dropSubAddress(email: string): string {
-	let [localPart, domainPart] = email.trim().split("@");
+	const parsed = parse(email);
 
-	if (localPart === undefined) {
-		throw Error("Invalid email: Local part is missing");
-	}
+	parsed.subAddress = "";
 
-	if (domainPart === undefined) {
-		throw Error("Invalid email: Domain part is missing");
-	}
-
-	domainPart = domainPart.toLowerCase();
-	localPart = localPart.split("+").at(0) as string;
-
-	return `${localPart}@${domainPart}`;
+	return format(parsed);
 }
 
 /**
@@ -91,22 +103,11 @@ export function dropSubAddress(email: string): string {
  * ```
  */
 export function sanatizeEmail(email: string): string {
-	let [localPart, domainPart] = email.trim().split("@");
+	const parsed = parse(email);
 
-	if (localPart === undefined) {
-		throw Error("Invalid email: Local part is missing");
+	if (DOMAINS_IGNORING_DOTS_IN_LOCAL_PART.includes(parsed.domain)) {
+		parsed.address = parsed.address.replace(/\./g, "");
 	}
 
-	if (domainPart === undefined) {
-		throw Error("Invalid email: Domain part is missing");
-	}
-
-	domainPart = domainPart.toLowerCase();
-	localPart = localPart.split("+").at(0) as string; // drop the sub address
-
-	if (DOMAINS_IGNORING_DOTS_IN_LOCAL_PART.includes(domainPart)) {
-		localPart = localPart.replace(/\./g, "");
-	}
-
-	return `${localPart}@${domainPart}`;
+	return `${parsed.address}@${parsed.domain}`;
 }
