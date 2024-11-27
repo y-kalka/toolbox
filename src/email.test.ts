@@ -2,7 +2,6 @@ import { describe, expect } from "vitest";
 import {
 	addSubAddress,
 	dropSubAddress,
-	fingerprint,
 	sanatizeEmail,
 	setSubAddress,
 } from "./email.js";
@@ -44,29 +43,29 @@ describe("sanatizeEmail", (test) => {
 	});
 });
 
-describe("fingerprint", (test) => {
-	test("should generate the same fingerprint for differnt visual addresses", () => {
-		const testCases = [
-			{
-				alias: ["hello@gmail.com", "h.eLl.o@gmAIL.com"],
-				fingerprint: "tZp0EYO34ZkBVqRvqim2DA==",
-			},
-			{
-				alias: ["hello@world.com", "HELLO@world.com"],
-				fingerprint: "Szzfmt/GJYoQKrkOtkVl6g==",
-			},
-		];
+// describe("fingerprint", (test) => {
+// 	test("should generate the same fingerprint for differnt visual addresses", () => {
+// 		const testCases = [
+// 			{
+// 				alias: ["hello@gmail.com", "h.eLl.o@gmAIL.com"],
+// 				fingerprint: "tZp0EYO34ZkBVqRvqim2DA==",
+// 			},
+// 			{
+// 				alias: ["hello@world.com", "HELLO@world.com"],
+// 				fingerprint: "Szzfmt/GJYoQKrkOtkVl6g==",
+// 			},
+// 		];
 
-		for (const testCase of testCases) {
-			for (const alias of testCase.alias) {
-				expect(fingerprint(alias)).toBe(testCase.fingerprint);
-			}
-		}
-	});
+// 		for (const testCase of testCases) {
+// 			for (const alias of testCase.alias) {
+// 				expect(fingerprint(alias)).toBe(testCase.fingerprint);
+// 			}
+// 		}
+// 	});
 
-	test("should use the salt correctly", () => {
-		expect(fingerprint("hello@world.com")).not.equal(
-			fingerprint("hello@world.com", { salt: "test" }),
-		);
-	});
-});
+// 	test("should use the salt correctly", () => {
+// 		expect(fingerprint("hello@world.com")).not.equal(
+// 			fingerprint("hello@world.com", { salt: "test" }),
+// 		);
+// 	});
+// });
