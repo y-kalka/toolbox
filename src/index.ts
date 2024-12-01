@@ -1,3 +1,4 @@
+import * as async from "./async.js";
 import * as email from "./email.js";
 import * as number from "./number.js";
 import * as percent from "./percent.js";
@@ -9,4 +10,6 @@ export {
 	number,
 	/** @deprecated Use the import from "@y-kalka/toolbox/percent" */
 	percent,
+	/** @deprecated Use the import from "@y-kalka/toolbox/async" */
+	async,
 };

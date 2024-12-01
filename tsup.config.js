@@ -2,8 +2,9 @@ import { defineConfig } from "tsup";
 
 export default defineConfig({
 	entry: {
-		index: "src/index.ts",
+		async: "src/async.ts",
 		email: "src/email.ts",
+		index: "src/index.ts",
 		number: "src/number.ts",
 		percent: "src/percent.ts",
 	},
