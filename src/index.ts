@@ -2,6 +2,7 @@ import * as async from "./async.js";
 import * as email from "./email.js";
 import * as number from "./number.js";
 import * as percent from "./percent.js";
+import * as random from "./random.js";
 
 export {
 	/** @deprecated Use the import from "@y-kalka/toolbox/email" */
@@ -12,4 +13,6 @@ export {
 	percent,
 	/** @deprecated Use the import from "@y-kalka/toolbox/async" */
 	async,
+	/** @deprecated Use the import from "@y-kalka/toolbox/random" */
+	random,
 };

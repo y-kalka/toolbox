@@ -4,6 +4,7 @@ export default defineConfig({
 	entry: {
 		async: "src/async.ts",
 		email: "src/email.ts",
+		random: "src/random.ts",
 		index: "src/index.ts",
 		number: "src/number.ts",
 		percent: "src/percent.ts",
