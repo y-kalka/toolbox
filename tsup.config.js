@@ -3,6 +3,7 @@ import { defineConfig } from "tsup";
 export default defineConfig({
 	entry: {
 		async: "src/async.ts",
+		array: "src/array.ts",
 		email: "src/email.ts",
 		random: "src/random.ts",
 		index: "src/index.ts",

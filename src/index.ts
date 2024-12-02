@@ -1,3 +1,4 @@
+import * as array from "./array.js";
 import * as async from "./async.js";
 import * as email from "./email.js";
 import * as number from "./number.js";
@@ -15,4 +16,6 @@ export {
 	async,
 	/** @deprecated Use the import from "@y-kalka/toolbox/random" */
 	random,
+	/** @deprecated Use the import from "@y-kalka/toolbox/array" */
+	array,
 };
