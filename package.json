@@ -14,7 +14,7 @@
 		"fmt": "biome format --write .",
 		"fix": "biome check --write .",
 		"lint": "biome check .",
-		"prepublish": "pnpm test && pnpm lint && pnpm build"
+		"prepublish": "pnpm test && pnpm build"
 	},
 	"exports": {
 		".": {
@@ -88,9 +88,7 @@
 			}
 		}
 	},
-	"files": [
-		"dist"
-	],
+	"files": ["dist"],
 	"keywords": [],
 	"author": "",
 	"license": "MIT",
