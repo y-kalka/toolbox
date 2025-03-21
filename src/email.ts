@@ -1,4 +1,4 @@
-// import { createHash } from "node:crypto";
+import type { webcrypto } from "node:crypto";
 
 /**
  * List of domains which will ignore any dots in the local part of the address
@@ -116,23 +116,27 @@ export function sanatizeEmail(email: string): string {
 
 interface FingerPrintOptions {
 	/**
-	 * @default "md5"
+	 * @default "SHA-1"
 	 */
-	algorithm?: string;
-	salt?: string;
+	algorithm?: webcrypto.AlgorithmIdentifier;
 }
 
-// export function fingerprint(
-// 	email: string,
-// 	options?: FingerPrintOptions,
-// ): string {
-// 	let sanatized = sanatizeEmail(email).toLowerCase();
+export async function fingerprint(
+	email: string,
+	options?: FingerPrintOptions,
+): Promise<string> {
+	const sanatized = sanatizeEmail(email).toLowerCase();
 
-// 	if (options?.salt) {
-// 		sanatized = options.salt + sanatized;
-// 	}
+	const sourceBytes = new TextEncoder().encode(sanatized);
+	const hashBuffer = await crypto.subtle.digest(
+		options?.algorithm || "SHA-1",
+		sourceBytes,
+	);
 
-// 	return createHash(options?.algorithm || "md5")
-// 		.update(sanatized)
-// 		.digest("base64");
-// }
+	return btoa(
+		new Uint8Array(hashBuffer).reduce(
+			(data, byte) => data + String.fromCharCode(byte),
+			"",
+		),
+	);
+}
