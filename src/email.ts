@@ -3,11 +3,16 @@ import type { webcrypto } from "node:crypto";
 /**
  * List of domains which will ignore any dots in the local part of the address
  */
-const DOMAINS_IGNORING_DOTS_IN_LOCAL_PART = [
+const DOMAINS_IGNORING_DOTS_IN_LOCAL_PART = new Set([
 	"google.com",
 	"gmail.com",
 	"googlemail.com",
-];
+]);
+
+/**
+ * List of known throw away email domains
+ */
+const THROW_AWAY_EMAIL_DOMAINS = new Set(["gholar.com"]);
 
 interface ParsedEmailAddress {
 	address: string;
@@ -107,7 +112,7 @@ export function dropSubAddress(email: string): string {
 export function sanatizeEmail(email: string): string {
 	const parsed = parse(email);
 
-	if (DOMAINS_IGNORING_DOTS_IN_LOCAL_PART.includes(parsed.domain)) {
+	if (DOMAINS_IGNORING_DOTS_IN_LOCAL_PART.has(parsed.domain)) {
 		parsed.address = parsed.address.replace(/\./g, "");
 	}
 
@@ -139,4 +144,10 @@ export async function fingerprint(
 			"",
 		),
 	);
+}
+
+export function isThrowAway(email: string): boolean {
+	const { domain } = parse(email);
+
+	return THROW_AWAY_EMAIL_DOMAINS.has(domain);
 }
