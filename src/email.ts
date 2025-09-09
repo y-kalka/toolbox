@@ -20,7 +20,7 @@ function parse(email: string): ParsedEmailAddress {
 		throw Error("Invalid email address");
 	}
 
-	const [localPart, domainPart] = email.trim().split("@");
+	const [localPart = "", domainPart] = email.trim().split("@");
 	const [address, subAddress] = localPart.split("+");
 
 	if (!address) {

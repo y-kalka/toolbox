@@ -1,94 +1,27 @@
 {
 	"name": "@y-kalka/toolbox",
-	"version": "1.4.0",
+	"version": "2.0.0",
 	"type": "module",
-	"main": "dist/index.cjs",
-	"module": "dist/index.js",
-	"types": "dist/index.d.cts",
 	"engines": {
 		"node": ">=22.9.0"
 	},
 	"scripts": {
 		"test": "vitest run",
-		"build": "tsup",
+		"build": "del dist/ && tsc",
 		"fmt": "biome format --write .",
 		"fix": "biome check --write .",
 		"lint": "biome check .",
 		"prepublish": "pnpm test && pnpm build"
 	},
 	"exports": {
-		".": {
-			"import": {
-				"types": "./dist/index.d.ts",
-				"default": "./dist/index.js"
-			},
-			"require": {
-				"types": "./dist/index.d.cts",
-				"require": "./dist/index.cjs"
-			}
-		},
-		"./array": {
-			"import": {
-				"types": "./dist/array.d.ts",
-				"default": "./dist/array.js"
-			},
-			"require": {
-				"types": "./dist/array.d.cts",
-				"require": "./dist/array.cjs"
-			}
-		},
-		"./async": {
-			"import": {
-				"types": "./dist/async.d.ts",
-				"default": "./dist/async.js"
-			},
-			"require": {
-				"types": "./dist/async.d.cts",
-				"require": "./dist/async.cjs"
-			}
-		},
-		"./email": {
-			"import": {
-				"types": "./dist/email.d.ts",
-				"default": "./dist/email.js"
-			},
-			"require": {
-				"types": "./dist/email.d.cts",
-				"require": "./dist/email.cjs"
-			}
-		},
-		"./random": {
-			"import": {
-				"types": "./dist/random.d.ts",
-				"default": "./dist/random.js"
-			},
-			"require": {
-				"types": "./dist/random.d.cts",
-				"require": "./dist/random.cjs"
-			}
-		},
-		"./number": {
-			"import": {
-				"types": "./dist/number.d.ts",
-				"default": "./dist/number.js"
-			},
-			"require": {
-				"types": "./dist/number.d.cts",
-				"require": "./dist/number.cjs"
-			}
-		},
-		"./percent": {
-			"import": {
-				"types": "./dist/percent.d.ts",
-				"default": "./dist/percent.js"
-			},
-			"require": {
-				"types": "./dist/percent.d.cts",
-				"require": "./dist/percent.cjs"
-			}
+		"./*": {
+			"types": "./dist/*.d.ts",
+			"default": "./dist/*.js"
 		}
 	},
-	"files": ["dist"],
+	"files": [
+		"dist"
+	],
 	"keywords": [],
 	"author": "",
 	"license": "MIT",
@@ -99,8 +32,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"@changesets/cli": "^2.28.1",
-		"@types/node": "~22.9.4",
-		"tsup": "^8.4.0",
+		"del-cli": "^6.0.0",
 		"typescript": "^5.8.2",
 		"vitest": "^2.1.9"
 	}
