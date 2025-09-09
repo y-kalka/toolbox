@@ -7,7 +7,7 @@
 		"build": "del dist/ && tsc",
 		"fmt": "biome format --write .",
 		"fix": "biome check --write .",
-		"lint": "biome check .",
+		"lint": "biome check . && tsc --noEmit",
 		"prepublish": "pnpm test && pnpm build"
 	},
 	"exports": {
@@ -29,7 +29,7 @@
 		"@changesets/cli": "^2.28.1",
 		"@types/node": "^22.9.0",
 		"del-cli": "^6.0.0",
-		"typescript": "^5.8.2",
-		"vitest": "^2.1.9"
+		"typescript": "^5.9.2",
+		"vitest": "^3.2.4"
 	}
 }

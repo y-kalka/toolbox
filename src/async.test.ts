@@ -17,6 +17,6 @@ describe("sleep", (test) => {
 	);
 
 	test("should return a promise", async () => {
-		expect(sleep(TIME_MS)).resolves.toBe(undefined);
+		expect(sleep(TIME_MS)).instanceOf(Promise);
 	});
 });
