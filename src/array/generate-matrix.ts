@@ -19,6 +19,9 @@ type Matrix<T extends readonly unknown[][]> = T extends []
 
 /**
  * Generates a matrix from all input array containing a variant of each constelation
+ * ```ts
+ * generateMatrix(["a", "b"], ["c", "d"]); // [["a", "c"], ["a", "d"], ["b", "c"], ["b", "d"]];
+ * ```
  */
 export function generateMatrix<const T extends readonly unknown[][]>(
 	...arrays: T

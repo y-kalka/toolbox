@@ -1,5 +1,5 @@
 import { describe, expect } from "vitest";
-import { sleep } from "./async.js";
+import { sleep } from "./sleep.js";
 
 describe("sleep", (test) => {
 	const TIME_MS = 10;

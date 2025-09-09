@@ -1,5 +1,5 @@
 import { describe, expect } from "vitest";
-import { round } from "./number.js";
+import { round } from "./round.js";
 
 describe("round", (test) => {
 	test("should round correct to the requested decimal point", () => {
