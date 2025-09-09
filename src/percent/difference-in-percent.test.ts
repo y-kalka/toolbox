@@ -1,19 +1,7 @@
-import { describe, expect } from "vitest";
-import { differenceInPercent, percentFromTotal } from "./percent.js";
+import { expect, suite } from "vitest";
+import { differenceInPercent } from "./difference-in-percent.js";
 
-describe("percentFromTotal", (test) => {
-	test("should calculate percentage correct", () => {
-		expect(percentFromTotal(50, 100)).toBe(50);
-		expect(percentFromTotal(100, 100)).toBe(100);
-		expect(percentFromTotal(25, 47)).toBe(53.19);
-	});
-
-	test("should throw on invalid input", () => {
-		expect(() => percentFromTotal(100, 50)).toThrowError();
-	});
-});
-
-describe("differenceInPercent", (test) => {
+suite("differenceInPercent", (test) => {
 	test("should calculate the difference from 0 to X", () => {
 		const res = differenceInPercent(0, 5);
 		expect(res).toBe(500);

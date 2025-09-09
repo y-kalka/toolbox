@@ -1,4 +1,4 @@
-import { round } from "./number/round.js";
+import { round } from "../number/round.js";
 
 /**
  * Returns the percentage of a fraction from a value

@@ -15,6 +15,9 @@ interface ParsedEmailAddress {
 	domain: string;
 }
 
+/**
+ * @private
+ */
 function parse(email: string): ParsedEmailAddress {
 	if (!email || typeof email !== "string") {
 		throw Error("Invalid email address");
